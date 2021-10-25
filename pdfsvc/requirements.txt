@@ -1,0 +1,7 @@
+Django==3.2.7
+djangorestframework==3.12.4
+weasyprint==53.3
+psycopg2-binary==2.9.1
+celery==5.1.2
+gevent==21.8.0
+gunicorn==20.1.0

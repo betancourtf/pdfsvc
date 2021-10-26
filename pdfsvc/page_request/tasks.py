@@ -7,7 +7,7 @@ from .models import PageRequest
 
 
 def pdf(page):
-    # post_save fires after the save but before the transaction is commited 
+    # post_save fires after the save but before the transaction is commited
     time.sleep(1)
     if page.status != page.Status.PENDING:
         return

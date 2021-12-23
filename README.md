@@ -13,6 +13,19 @@ Read the posts for more information.
 
 The folder `pdfsvc` is a basic Django app to generate PDF from HTML pages. The idea is to tackle a problem that's not as simple as a Tasks app and that will require more analysis to solve, while being simple enough to understand even for relative new comers to Python/Django.
 
+### Running the load testing (Episode 4)
+To run both the app and the load test two compose files must be passed when starting up:
+```
+docker compose -f docker-compose.yml -f docker-compose.locust.yml up -d
+docker exec -it pdfsvc-web-1 bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+```
+The Locust web interface will be available at [http://localhost:8089](http://localhost:8089), while the Django REST Framework API will be available at [http://localhost:8000/api/](http://localhost:8000/api/)
+
+The full blog post is available here : [Episode 4 — Testing your Python/Django app’s performance](https://medium.com/@betancourt.francisco/episode-4-testing-your-python-django-apps-performance-4661f5e78f85)
+
 ### Running with containers (Episode 3)
 The project includes a `Dockerfile` and a `docker-compose.yml`file to run it inside a container. Simply run the commands:
 ```
@@ -23,6 +36,8 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 After running the commands above the project will be running and you will have a user to login to the Django Admin and test the pdf functionality still works.
+
+The full blog post is available here: [Episode 3 — Containerizing a Python/Django App](https://medium.com/@betancourt.francisco/episode-3-containerizing-a-python-django-app-5cd952bea204)
 
 
 ### Running locally (Episode 2)

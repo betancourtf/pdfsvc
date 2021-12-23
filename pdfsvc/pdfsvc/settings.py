@@ -26,8 +26,7 @@ SECRET_KEY = "django-insecure-qtke4jb#9l538v)3^vzyt@!_@ff-_(r&3e#-rbru3q&aau7sck
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOST_LIST", "*").split(",")
 
 # Application definition
 
@@ -39,6 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
+    "rest_framework.authtoken",
 ]
 
 MIDDLEWARE = [
@@ -146,4 +147,11 @@ LOGGING = {
         "handlers": ["console"],
         "level": "WARNING",
     },
+}
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ]
 }

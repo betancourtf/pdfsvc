@@ -13,4 +13,4 @@ def call_pdf(sender, instance, created, **kwargs):
     logger.info("New Page Created: %s", instance.url)
     if created:
         logger.info("Creating pdf for instance %s", instance.pk)
-        pdf(instance)
+        pdf.delay(instance.pk)

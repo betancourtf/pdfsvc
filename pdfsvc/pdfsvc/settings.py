@@ -155,3 +155,8 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
     ]
 }
+
+broker_url = os.environ.get("CELERY_BROKER_URL")
+result_backend = None
+task_acks_late = True
+worker_prefetch_multiplier = 1

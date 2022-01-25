@@ -13,6 +13,17 @@ Read the posts for more information.
 
 The folder `pdfsvc` is a basic Django app to generate PDF from HTML pages. The idea is to tackle a problem that's not as simple as a Tasks app and that will require more analysis to solve, while being simple enough to understand even for relative new comers to Python/Django.
 
+### Running the improved web app and the workers
+To run the improved app that now uses a queue, use:
+```
+docker compose up -d
+```
+The RabbitMQ manager will be available at [http://localhost:15672](http://localhost:15672).
+
+If you want to load test the new code use the last's episode commands.
+
+The full blog post is available here: [Episode 5 - Handling expensive  tasks with Celery and RabbitMQ](https://medium.com/@betancourt.francisco/episode-5-handling-expensive-tasks-with-celery-and-rabbitmq-118fadeaf475)
+
 ### Running the load testing (Episode 4)
 To run both the app and the load test two compose files must be passed when starting up:
 ```

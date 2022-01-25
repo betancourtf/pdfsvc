@@ -17,6 +17,8 @@ services:
       POSTGRES_USER: $DB_USER
       POSTGRES_PASSWORD: $DB_PWD
       POSTGRES_HOST: $DB_HOST
+      DJANGO_SETTINGS_MODULE: pdfsvc.settings
+      CELERY_BROKER_URL: amqp://guest:guest@rabbitmq:5672/
 
   db:
     image: postgres:13-alpine
@@ -25,3 +27,29 @@ services:
       POSTGRES_DB: $DB_NAME
       POSTGRES_USER: $DB_USER
       POSTGRES_PASSWORD: $DB_PWD
+
+  rabbitmq:
+    image: rabbitmq:3.9-management-alpine
+    command: ash -c "echo 'log.console.level = warning'
+      >>/etc/rabbitmq/conf.d/10-default-guest-user.conf && rabbitmq-server"
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+  worker:
+    image: pdfsvc
+    depends_on:
+      - db
+      - rabbitmq
+      - web
+    command: celery -A pdfsvc worker --concurrency=5
+    volumes:
+      - ./pdfsvc:/opt/pdfsvc
+    environment:
+      POSTGRES_PORT: $DB_PORT
+      POSTGRES_DB: $DB_NAME
+      POSTGRES_USER: $DB_USER
+      POSTGRES_PASSWORD: $DB_PWD
+      POSTGRES_HOST: $DB_HOST
+      DJANGO_SETTINGS_MODULE: pdfsvc.settings
+      CELERY_BROKER_URL: amqp://guest:guest@rabbitmq:5672/

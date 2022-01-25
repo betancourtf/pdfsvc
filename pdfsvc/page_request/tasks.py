@@ -1,14 +1,15 @@
 import io
-import time
 
 from weasyprint import HTML
 from django.core.files import File
+
 from .models import PageRequest
+from pdfsvc.celery import app
 
 
-def pdf(page):
-    # post_save fires after the save but before the transaction is commited
-    time.sleep(1)
+@app.task(time_limit=120)
+def pdf(page_id):
+    page = PageRequest.objects.get(pk=page_id)
     if page.status != page.Status.PENDING:
         return
     page.status = PageRequest.Status.GENERATING

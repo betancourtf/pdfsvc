@@ -13,7 +13,14 @@ Read the posts for more information.
 
 The folder `pdfsvc` is a basic Django app to generate PDF from HTML pages. The idea is to tackle a problem that's not as simple as a Tasks app and that will require more analysis to solve, while being simple enough to understand even for relative new comers to Python/Django.
 
-### Running the improved web app and the workers
+### Running with the production ready server (Nginx Unit)
+To run with the production ready server make sure you don't specify a command in the web service in the `docker-compose.yml` (It is commented out for this release).
+```
+docker compose up -d
+```
+The full blog post is available here: [Episode 6 — Running a Django App in production with Nginx Unit](https://medium.com/@betancourt.francisco/episode-6-running-a-django-app-in-production-with-nginx-unit-c4813e262aa2)
+
+### Running the improved web app and the workers (Episode 5)
 To run the improved app that now uses a queue, use:
 ```
 docker compose up -d

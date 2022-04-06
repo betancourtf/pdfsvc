@@ -8,9 +8,9 @@ services:
     image: pdfsvc
     ports:
       - "8000:8000"
-    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./pdfsvc:/opt/pdfsvc
+    #command: python manage.py runserver 0.0.0.0:8000
     environment:
       POSTGRES_PORT: $DB_PORT
       POSTGRES_DB: $DB_NAME
@@ -30,8 +30,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.9-management-alpine
-    command: ash -c "echo 'log.console.level = warning'
-      >>/etc/rabbitmq/conf.d/10-default-guest-user.conf && rabbitmq-server"
+    command: ash -c "echo 'log.console.level = warning' >>/etc/rabbitmq/conf.d/10-default-guest-user.conf && rabbitmq-server"
     ports:
       - 5672:5672
       - 15672:15672

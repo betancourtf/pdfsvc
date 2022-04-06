@@ -1,0 +1,39 @@
+{
+  "listeners": {
+    "*:8000": {
+      "pass": "routes"
+    }
+  },
+  "routes": [
+    {
+      "match": {
+        "uri": "/static/*"
+      },
+      "action": {
+        "share": "/opt/pdfsvc$uri"
+      }
+    },
+    {
+      "match": {
+        "uri": "/media/*"
+      },
+      "action": {
+        "share": "/opt/pdfsvcs$uri"
+      }
+    },
+    {
+      "action": {
+        "pass": "applications/django"
+      }
+    }
+  ],
+  "applications": {
+    "django": {
+      "type": "python 3",
+      "processes": 4,
+      "threads": 4,
+      "path": "/opt/pdfsvc",
+      "module": "pdfsvc.wsgi"
+    }
+  }
+}

@@ -78,7 +78,7 @@ resource "digitalocean_app" "app" {
       instance_size_slug = "basic-xs"
       image {
         registry_type = "DOCR"
-        repository    = "${digitalocean_container_registry.registry.name}/pdfsvc"
+        repository    = "pdfsvc"
         tag           = "latest"
       }
       run_command = "unitd --no-daemon --control unix:/var/run/control.unit.sock"
@@ -89,7 +89,7 @@ resource "digitalocean_app" "app" {
       instance_count     = 1
       image {
         registry_type = "DOCR"
-        repository    = "${digitalocean_container_registry.registry.name}/pdfsvc"
+        repository    = "pdfsvc"
         tag           = "latest"
       }
       run_command = "celery -A pdfsvc worker --concurrency=5"

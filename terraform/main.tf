@@ -20,9 +20,11 @@ resource "cloudamqp_instance" "instance" {
 
 resource "digitalocean_container_registry" "registry" {
   name                   = "pdfsvc-registry"
+  region                 = "sfo"
   subscription_tier_slug = "starter"
 }
 
 resource "digitalocean_container_registry_docker_credentials" "registry_credentials" {
   registry_name = "pdfsvc-registry"
+  write         = true
 }

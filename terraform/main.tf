@@ -27,4 +27,7 @@ resource "digitalocean_container_registry" "registry" {
 resource "digitalocean_container_registry_docker_credentials" "registry_credentials" {
   registry_name = "pdfsvc-registry"
   write         = true
+  depends_on = [
+    digitalocean_container_registry.registry
+  ]
 }

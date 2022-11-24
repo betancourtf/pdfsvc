@@ -20,7 +20,7 @@ resource "cloudamqp_instance" "instance" {
 
 resource "digitalocean_container_registry" "registry" {
   name                   = "pdfsvc-registry"
-  region                 = "sfo"
+  region                 = "sfo3"
   subscription_tier_slug = "starter"
 }
 

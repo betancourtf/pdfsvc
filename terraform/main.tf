@@ -24,6 +24,13 @@ resource "digitalocean_container_registry" "registry" {
   subscription_tier_slug = "starter"
 }
 
+resource "digitalocean_database_cluster" "postgres" {
+  name    = "pdfsvc-dev"
+  engine  = "pg"
+  version = "14"
+  size    = "db-s-1vcpu-1gb"
+  region  = "sfo3"
+}
 
 resource "digitalocean_app" "app" {
   spec {
@@ -43,31 +50,31 @@ resource "digitalocean_app" "app" {
     }
     env {
       key   = "POSTGRES_HOST"
-      value = "$${db.HOSTNAME}"
+      value = digitalocean_database_cluster.postgres.host
       scope = "RUN_TIME"
       type  = "GENERAL"
     }
     env {
       key   = "POSTGRES_PORT"
-      value = "$${db.PORT}"
+      value = digitalocean_database_cluster.postgres.port
       scope = "RUN_TIME"
       type  = "GENERAL"
     }
     env {
       key   = "POSTGRES_DB"
-      value = "$${db.DATABASE}"
+      value = digitalocean_database_cluster.postgres.database
       scope = "RUN_TIME"
       type  = "GENERAL"
     }
     env {
       key   = "POSTGRES_USER"
-      value = "$${db.USERNAME}"
+      value = digitalocean_database_cluster.postgres.user
       scope = "RUN_TIME"
       type  = "GENERAL"
     }
     env {
       key   = "POSTGRES_PASSWORD"
-      value = "$${db.PASSWORD}"
+      value = digitalocean_database_cluster.postgres.password
       scope = "RUN_TIME"
       type  = "SECRET"
     }

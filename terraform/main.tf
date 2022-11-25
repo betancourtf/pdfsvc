@@ -114,11 +114,5 @@ resource "digitalocean_app" "app" {
       }
       run_command = "celery -A pdfsvc worker --concurrency=5"
     }
-
-    database {
-      name       = "db"
-      engine     = "PG"
-      production = false
-    }
   }
 }

@@ -25,11 +25,12 @@ resource "digitalocean_container_registry" "registry" {
 }
 
 resource "digitalocean_database_cluster" "postgres" {
-  name    = "pdfsvc-dev"
-  engine  = "pg"
-  version = "14"
-  size    = "db-s-1vcpu-1gb"
-  region  = "sfo3"
+  name       = "pdfsvc-dev"
+  engine     = "pg"
+  version    = "14"
+  size       = "db-s-1vcpu-1gb"
+  region     = "sfo3"
+  node_count = 1
 }
 
 resource "digitalocean_app" "app" {

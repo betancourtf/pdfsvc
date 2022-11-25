@@ -81,22 +81,28 @@ resource "digitalocean_app" "app" {
       name               = "pdfsvc-api"
       http_port          = 8000
       instance_count     = 1
-      instance_size_slug = "basic-xs"
+      instance_size_slug = "basic-xxs"
       image {
         registry_type = "DOCR"
         repository    = "pdfsvc"
         tag           = "latest"
+        deploy_on_push {
+          enabled = true
+        }
       }
       run_command = "unitd --no-daemon --control unix:/var/run/control.unit.sock"
     }
     worker {
       name               = "celery-worker"
-      instance_size_slug = "basic-xs"
+      instance_size_slug = "basic-xxs"
       instance_count     = 1
       image {
         registry_type = "DOCR"
         repository    = "pdfsvc"
         tag           = "latest"
+        deploy_on_push {
+          enabled = true
+        }
       }
       run_command = "celery -A pdfsvc worker --concurrency=5"
     }
@@ -105,6 +111,8 @@ resource "digitalocean_app" "app" {
       name       = "db"
       engine     = "PG"
       production = false
+      db_name    = "pdfsvc"
+      db_user    = "pdfuser"
     }
   }
 }

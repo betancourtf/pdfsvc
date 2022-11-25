@@ -2,7 +2,6 @@
 
 This repo contains the code for the Medium posts. It begins by creating a simple Django PDF creating app, and builds on more complicated topics.
 
-
 ## Purpose
 
 The posts were born from the lack of similar project while trying to learn. Many posts are being written to use more complicated stacks, that usually include Kubernetes. The idea of this is to build a production ready stack/workflow using simpler solutions.
@@ -11,28 +10,43 @@ Read the posts for more information.
 
 ## The App
 
-The folder `pdfsvc` is a basic Django app to generate PDF from HTML pages. The idea is to tackle a problem that's not as simple as a Tasks app and that will require more analysis to solve, while being simple enough to understand even for relative new comers to Python/Django.
+The folder `pdfsvc` is a basic Django app to generate PDFs from HTML pages. The idea is to tackle a problem that's not as simple as a Tasks app and that will require more analysis to solve, while being simple enough to understand even for relative new comers to Python/Django.
 
-### Running with the production ready server (Nginx Unit)
+### Using Terraform to manage infra for a Django/Python app (Episode 7)
+
+Code defining the resources needed for running the app in CloudAMQP and DigitalOcean now lives in the `terraform` folder.
+Read the article to check how to run this locally or even better run it using env0 a SaaS offering for managing and automating Terraform deployments (among other things).
+
+The full blog post is available here: [Episode 7 - Using Terraform to manage infra for a Django/Python app]()
+
+### Running with the production ready server Nginx Unit (Episode 6)
+
 To run with the production ready server make sure you don't specify a command in the web service in the `docker-compose.yml` (It is commented out for this release).
+
 ```
 docker compose up -d
 ```
+
 The full blog post is available here: [Episode 6 — Running a Django App in production with Nginx Unit](https://medium.com/@betancourt.francisco/episode-6-running-a-django-app-in-production-with-nginx-unit-c4813e262aa2)
 
 ### Running the improved web app and the workers (Episode 5)
+
 To run the improved app that now uses a queue, use:
+
 ```
 docker compose up -d
 ```
+
 The RabbitMQ manager will be available at [http://localhost:15672](http://localhost:15672).
 
 If you want to load test the new code use the last's episode commands.
 
-The full blog post is available here: [Episode 5 - Handling expensive  tasks with Celery and RabbitMQ](https://medium.com/@betancourt.francisco/episode-5-handling-expensive-tasks-with-celery-and-rabbitmq-118fadeaf475)
+The full blog post is available here: [Episode 5 - Handling expensive tasks with Celery and RabbitMQ](https://medium.com/@betancourt.francisco/episode-5-handling-expensive-tasks-with-celery-and-rabbitmq-118fadeaf475)
 
 ### Running the load testing (Episode 4)
+
 To run both the app and the load test two compose files must be passed when starting up:
+
 ```
 docker compose -f docker-compose.yml -f docker-compose.locust.yml up -d
 docker exec -it pdfsvc-web-1 bash
@@ -40,12 +54,15 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser
 ```
+
 The Locust web interface will be available at [http://localhost:8089](http://localhost:8089), while the Django REST Framework API will be available at [http://localhost:8000/api/](http://localhost:8000/api/)
 
 The full blog post is available here : [Episode 4 — Testing your Python/Django app’s performance](https://medium.com/@betancourt.francisco/episode-4-testing-your-python-django-apps-performance-4661f5e78f85)
 
 ### Running with containers (Episode 3)
+
 The project includes a `Dockerfile` and a `docker-compose.yml`file to run it inside a container. Simply run the commands:
+
 ```
 docker compose build
 docker compose up
@@ -53,10 +70,10 @@ docker exec -it pdfsvc-web-1 bash
 python manage.py migrate
 python manage.py createsuperuser
 ```
+
 After running the commands above the project will be running and you will have a user to login to the Django Admin and test the pdf functionality still works.
 
 The full blog post is available here: [Episode 3 — Containerizing a Python/Django App](https://medium.com/@betancourt.francisco/episode-3-containerizing-a-python-django-app-5cd952bea204)
-
 
 ### Running locally (Episode 2)
 

@@ -1,5 +1,5 @@
 # Build stage
-FROM python:3.9-alpine AS builder
+FROM python:3.10-alpine AS builder
 
 WORKDIR /root
 
@@ -10,7 +10,7 @@ RUN apk add --no-cache pango zlib-dev jpeg-dev libffi-dev openjpeg-dev
 RUN pip install --no-cache-dir --user -r requirements.txt
 
 # Final image
-FROM python:3.9-alpine
+FROM python:3.10-alpine
 
 WORKDIR /opt/pdfsvc
 
@@ -18,7 +18,7 @@ RUN apk add --no-cache unit-python3 curl postgresql-client pango zlib jpeg openj
 
 COPY --chown=unit --from=builder /root/.local /opt/.local
 ENV PATH=/opt/.local/bin:$PATH
-ENV PYTHONPATH=/opt/.local/lib/python3.9/site-packages
+ENV PYTHONPATH=/opt/.local/lib/python3.10/site-packages:$PYTHONPATH
 
 COPY --chown=unit ./pdfsvc .
 COPY ./django.unit.json ./django-entrypoint.sh /docker-entrypoint.d/

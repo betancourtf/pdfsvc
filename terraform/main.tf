@@ -30,37 +30,43 @@ resource "digitalocean_app" "app" {
     name   = "pdfsvc-app"
     region = "sfo"
     env {
-      key   = "APP_HOST"
+      key   = "ALLOWED_HOST_LIST"
       value = "$${APP_DOMAIN}"
       scope = "RUN_TIME"
       type  = "GENERAL"
     }
     env {
-      key   = "DB_HOST"
+      key   = "ENVIRONMENT"
+      value = "dev"
+      scope = "RUN_TIME"
+      type  = "GENERAL"
+    }
+    env {
+      key   = "POSTGRES_HOST"
+      value = "$${db.HOSTNAME}"
+      scope = "RUN_TIME"
+      type  = "GENERAL"
+    }
+    env {
+      key   = "POSTGRES_PORT"
       value = "$${db.PORT}"
       scope = "RUN_TIME"
       type  = "GENERAL"
     }
     env {
-      key   = "DB_PORT"
-      value = "$${db.PORT}"
-      scope = "RUN_TIME"
-      type  = "GENERAL"
-    }
-    env {
-      key   = "DB_NAME"
+      key   = "POSTGRES_DB"
       value = "$${db.DATABASE}"
       scope = "RUN_TIME"
       type  = "GENERAL"
     }
     env {
-      key   = "DB_USER"
+      key   = "POSTGRES_USER"
       value = "$${db.USERNAME}"
       scope = "RUN_TIME"
       type  = "GENERAL"
     }
     env {
-      key   = "DB_PWD"
+      key   = "POSTGRES_PASSWORD"
       value = "$${db.PASSWORD}"
       scope = "RUN_TIME"
       type  = "SECRET"

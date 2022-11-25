@@ -24,14 +24,6 @@ resource "digitalocean_container_registry" "registry" {
   subscription_tier_slug = "starter"
 }
 
-resource "digitalocean_database_cluster" "postgres" {
-  name       = "pdfsvc-dev"
-  engine     = "pg"
-  version    = "14"
-  size       = "db-s-1vcpu-1gb"
-  region     = "sfo3"
-  node_count = 1
-}
 
 resource "digitalocean_app" "app" {
   spec {
@@ -57,31 +49,31 @@ resource "digitalocean_app" "app" {
     }
     env {
       key   = "POSTGRES_HOST"
-      value = digitalocean_database_cluster.postgres.host
+      value = "$${db.HOSTNAME}"
       scope = "RUN_TIME"
       type  = "GENERAL"
     }
     env {
       key   = "POSTGRES_PORT"
-      value = digitalocean_database_cluster.postgres.port
+      value = "$${db.PORT}"
       scope = "RUN_TIME"
       type  = "GENERAL"
     }
     env {
       key   = "POSTGRES_DB"
-      value = digitalocean_database_cluster.postgres.database
+      value = "$${db.DATABASE}"
       scope = "RUN_TIME"
       type  = "GENERAL"
     }
     env {
       key   = "POSTGRES_USER"
-      value = digitalocean_database_cluster.postgres.user
+      value = "$${db.USERNAME}"
       scope = "RUN_TIME"
       type  = "GENERAL"
     }
     env {
       key   = "POSTGRES_PASSWORD"
-      value = digitalocean_database_cluster.postgres.password
+      value = "$${db.PASSWORD}"
       scope = "RUN_TIME"
       type  = "SECRET"
     }
@@ -104,7 +96,7 @@ resource "digitalocean_app" "app" {
           enabled = true
         }
       }
-      run_command = "unitd --no-daemon --control unix:/var/run/control.unit.sock"
+      run_command = "/usr/local/bin/unit-docker-entrypoint.sh unitd --no-daemon --control unix:/var/run/control.unit.sock"
     }
     worker {
       name               = "celery-worker"
@@ -119,6 +111,12 @@ resource "digitalocean_app" "app" {
         }
       }
       run_command = "celery -A pdfsvc worker --concurrency=5"
+    }
+
+    database {
+      name       = "db"
+      engine     = "PG"
+      production = false
     }
   }
 }

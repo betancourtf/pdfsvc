@@ -50,6 +50,12 @@ resource "digitalocean_app" "app" {
       type  = "GENERAL"
     }
     env {
+      key   = "DJANGO_SETTINGS_MODULE"
+      value = "pdfsvc.settings"
+      scope = "RUN_TIME"
+      type  = "GENERAL"
+    }
+    env {
       key   = "POSTGRES_HOST"
       value = digitalocean_database_cluster.postgres.host
       scope = "RUN_TIME"

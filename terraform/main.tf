@@ -111,7 +111,6 @@ resource "digitalocean_app" "app" {
       name       = "db"
       engine     = "PG"
       production = false
-      db_name    = "pdfsvc"
       db_user    = "pdfuser"
     }
   }
